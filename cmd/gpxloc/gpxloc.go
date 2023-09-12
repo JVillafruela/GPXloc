@@ -165,7 +165,7 @@ func doWork(conf *Config) error {
 	return err
 }
 
-// traverse a directory looking for geotagged files whose position is inside the bounding box
+// traverse a directory looking for gps tracks whose position is inside the bounding box
 func walkGPXFilesInDir(dir string, lf LocationFinder) error {
 	return filepath.WalkDir(dir, func(path string, file fs.DirEntry, err error) error {
 		if err != nil {
@@ -182,7 +182,7 @@ func walkGPXFilesInDir(dir string, lf LocationFinder) error {
 
 			gpxfile, err := ReadGPXfile(fullname)
 			if err != nil {
-				fmt.Println("File name: ", fullname, "error ", err)
+				log.Println("File name: ", fullname, "error ", err)
 				return nil
 			}
 			//fmt.Println("DDD file name: ", fullname, gpxfile.bounds)
