@@ -3,9 +3,10 @@
 Find gpx files according to the location where they were recorded.
 
 Target location can be :
- - [x] a bounding box
- - [x] a circle 
+ - a bounding box (given by http://bboxfinder.com for example)
+ - a circle 
 
+The program searches the directories given as arguments for gpx files that intersect the bounding box or circle.
 
 ```
 NAME:                                                                                                                     
@@ -17,7 +18,7 @@ USAGE:
    gpxloc [global options] [arguments...]                                                                                 
                                                                                                                           
 VERSION:                                                                                                                  
-   0.1                                                                                                                    
+   1.0                                                                                                                    
                                                                                                                           
 GLOBAL OPTIONS:                                                                                                           
    --bbox value                    bounding box ("lon1,lat1,lon2,lat2")                                                   

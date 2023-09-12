@@ -30,7 +30,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "gpxloc"
 	app.Usage = "GPX files Location Finder\n\n   Find gpx files according to the location where they were recorded"
-	app.Version = "0.1"
+	app.Version = "1.0"
 
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
