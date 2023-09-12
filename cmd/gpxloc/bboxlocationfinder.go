@@ -19,7 +19,7 @@ func NewBboxLocationFinder(bbox string) (BboxLocationFinder, error) {
 }
 
 func (lf BboxLocationFinder) PossibleMatch(bbox orb.Bound) bool {
-	return lf.bbox.Intersects(bbox) || bbox.Intersects(lf.bbox)
+	return BoundsIntersect(lf.bbox, bbox)
 }
 
 // Check if the point is inside the bounding box

@@ -11,7 +11,7 @@ func TestNewBboxLocationFinder(t *testing.T) {
 	//bbox='5.630665,45.031614,5.634817,45.034214'
 	p1 := orb.Point{5.630665, 45.031614}
 	p2 := orb.Point{5.634817, 45.034214}
-	okBound := orb.MultiPoint{p1, p2}.Bound()
+	okBound := BoundingBox(p1, p2)
 	koBound := orb.Bound{}
 	okLf := BboxLocationFinder{bbox: okBound}
 	koLf := BboxLocationFinder{bbox: koBound}

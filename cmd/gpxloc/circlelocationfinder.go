@@ -34,7 +34,7 @@ func NewCircleLocationFinder(lat, lon float64, radius int64) (CircleLocationFind
 }
 
 func (lf CircleLocationFinder) PossibleMatch(bbox orb.Bound) bool {
-	return lf.bbox.Intersects(bbox) || bbox.Intersects(lf.bbox)
+	return BoundsIntersect(lf.bbox, bbox)
 }
 
 func (lf CircleLocationFinder) Match(lat, lon float64) bool {

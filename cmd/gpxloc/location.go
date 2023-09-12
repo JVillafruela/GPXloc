@@ -43,7 +43,15 @@ func BboxBound(str string) (orb.Bound, error) {
 	p1 := orb.Point{minLon, minLat}
 	p2 := orb.Point{maxLon, maxLat}
 
-	return orb.MultiPoint{p1, p2}.Bound(), nil
+	return BoundingBox(p1, p2), nil
+}
+
+func BoundingBox(p0, p1 orb.Point) orb.Bound {
+	return orb.MultiPoint{p0, p1}.Bound()
+}
+
+func BoundsIntersect(bbox1 orb.Bound, bbox2 orb.Bound) bool {
+	return bbox1.Intersects(bbox2) // || bbox2.Intersects(bbox1)
 }
 
 // validate a latitude in WGS84 system

@@ -11,7 +11,7 @@ func Test_bboxBound(t *testing.T) {
 	//bbox='5.630665,45.031614,5.634817,45.034214'
 	p1 := orb.Point{5.630665, 45.031614}
 	p2 := orb.Point{5.634817, 45.034214}
-	okBound := orb.MultiPoint{p1, p2}.Bound()
+	okBound := BoundingBox(p1, p2)
 	errBound := orb.Bound{}
 
 	type args struct {
@@ -44,6 +44,46 @@ func Test_bboxBound(t *testing.T) {
 			}
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("bboxBound() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestBoundsIntersect(t *testing.T) {
+	p0 := orb.Point{0.0, 0.0}
+	p1 := orb.Point{1.0, 1.0}
+	p2 := orb.Point{2.0, 2.0}
+	p3 := orb.Point{3.0, 3.0}
+	bbox_0_1 := BoundingBox(p0, p1)
+	bbox_0_2 := BoundingBox(p0, p2)
+	bbox_1_3 := BoundingBox(p1, p3)
+	bbox_2_3 := BoundingBox(p2, p3)
+	type args struct {
+		bbox1 orb.Bound
+		bbox2 orb.Bound
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{"OK bbox_0_1,bbox_0_1", args{bbox_0_1, bbox_0_1}, true},
+
+		{"OK bbox_0_1,bbox_0_2", args{bbox_0_1, bbox_0_2}, true},
+		{"OK bbox_0_2,bbox_0_1", args{bbox_0_2, bbox_0_1}, true},
+
+		{"OK bbox_0_2,bbox_1_3", args{bbox_0_2, bbox_1_3}, true},
+		{"OK bbox_1_3,bbox_0_2", args{bbox_1_3, bbox_0_2}, true},
+
+		{"KO bbox_0_1,bbox_2_3", args{bbox_0_1, bbox_2_3}, false},
+		{"KO bbox_2_3,bbox_0_1", args{bbox_2_3, bbox_0_1}, false},
+
+		{"OK bbox_0_1,bbox_1_3", args{bbox_0_1, bbox_1_3}, true}, // one point intersection
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := BoundsIntersect(tt.args.bbox1, tt.args.bbox2); got != tt.want {
+				t.Errorf("BoundsIntersect() = %v, want %v", got, tt.want)
 			}
 		})
 	}
